@@ -50,7 +50,9 @@ defmodule Graphql.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:absinthe, "~> 1.6.4"},
-      {:absinthe_plug, "~>1.5.8"}
+      {:absinthe_plug, "~>1.5.8"},
+      {:argon2_elixir, "~> 2.4.0"}
+
     ]
   end
 

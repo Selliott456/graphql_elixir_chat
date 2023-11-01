@@ -23,5 +23,11 @@ defmodule Graphql.Auth.User do
     |> validate_length(:password, min: 8, max: 30)
     |> validate_length(:username, min: 3, max: 30)
     |> validate_length(:name, min: 2, max: 30)
+    |> hash_password()
+  end
+
+  defp hash_password(changeset) do
+    IO.puts("changset =>")
+    IO.inspect(changeset)
   end
 end

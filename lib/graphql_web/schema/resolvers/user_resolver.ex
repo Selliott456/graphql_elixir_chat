@@ -1,10 +1,18 @@
 defmodule GraphqlWeb.Schema.Resolvers.UserResolver do
 
+  alias GraphqlWeb.Constants.Constants
   alias Graphql.Auth
+  alias GraphqlWeb.Utils.Utils
+  alias GraphqlWeb.Constants.Constants
 
   def register_user(_, %{input: input}, _) do
-    res = Auth.create_user(input)
-    IO.inspect(res)
-    {:ok, true}
+    case Auth.create_user(input) do
+      {:ok, _} -> {:ok, true}
+      {:error, %Ecto.Changeset{} = changeset} ->
+        errors = Utils.format_changeset_errors(changeset)
+        {:error, errors}
+      _ -> {:error, Constants.internal_server_error()}
+    end
+
   end
 end

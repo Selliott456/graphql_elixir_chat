@@ -13,6 +13,8 @@
                         'Elixir.Graphql.Auth','Elixir.Graphql.Auth.User',
                         'Elixir.Graphql.Mailer','Elixir.Graphql.Repo',
                         'Elixir.GraphqlWeb',
+                        'Elixir.GraphqlWeb.AuthController',
+                        'Elixir.GraphqlWeb.AuthView',
                         'Elixir.GraphqlWeb.Constants.Constants',
                         'Elixir.GraphqlWeb.Endpoint',
                         'Elixir.GraphqlWeb.ErrorHelpers',

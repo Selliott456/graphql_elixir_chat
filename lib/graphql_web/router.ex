@@ -1,4 +1,5 @@
 defmodule GraphqlWeb.Router do
+  alias GraphqlWeb.AuthController
   use GraphqlWeb, :router
 
   pipeline :browser do
@@ -14,8 +15,17 @@ defmodule GraphqlWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api/graphql" do
+  pipeline :graphql do
+    plug :accepts, ["json"]
+  end
+
+  scope "/api" do
     pipe_through :api
+    get "/auth", AuthController, :index
+  end
+
+  scope "/api/graphql" do
+    pipe_through :graphql
 
     get "/", Absinthe.Plug.GraphiQL, schema: GraphqlWeb.Schema,
     interface: :playground

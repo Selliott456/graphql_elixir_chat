@@ -1,5 +1,6 @@
 defmodule GraphqlWeb.Router do
   alias GraphqlWeb.AuthController
+  alias GraphqlWeb.PopulateAuth
   use GraphqlWeb, :router
 
   pipeline :browser do
@@ -14,6 +15,7 @@ defmodule GraphqlWeb.Router do
   pipeline :api do
     plug :accepts, ["json"]
     plug :fetch_session
+    plug PopulateAuth
   end
 
   pipeline :graphql do

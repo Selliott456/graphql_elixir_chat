@@ -6,6 +6,8 @@ defmodule GraphqlWeb.AuthController do
   alias GraphqlWeb.Constants.Constants
   alias Graphql.Auth.User
 
+  import Plug.Conn
+
   def register(conn, params) do
     case Auth.create_user(params) do
       {:ok, _} ->
@@ -25,7 +27,11 @@ defmodule GraphqlWeb.AuthController do
         case user do
           %User{} ->
             case Argon2.verify_pass(password, user.password) do
-              true -> nil
+              true -> conn
+              |> put_status(:created)
+              |> put_session(:current_user_id, user.id)
+              |>render("acknowledge.json", %{message: "Logged in"})
+
               _ -> render(conn, "errors.json", %{errors: Constants.invalid_credentials()})
             end
           _ -> render(conn, "errors.json", %{errors: Constants.invalid_credentials()})

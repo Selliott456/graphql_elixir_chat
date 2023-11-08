@@ -4,7 +4,7 @@ defmodule GraphqlWeb.Schema.Resolvers.UserResolver do
 
 
 
-  def get_all_users(_, _, _) do
+  def get_all_users(_, _, %{context: context}) do
     {:ok, Auth.list_users()}
   end
 end

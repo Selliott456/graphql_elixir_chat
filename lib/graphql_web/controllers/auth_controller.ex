@@ -9,7 +9,7 @@ defmodule GraphqlWeb.AuthController do
   import Plug.Conn
 
   plug :dont_exploit_me when action in [:login]
-  plug :protect_me when action in [:logout]
+  plug :protect_me when action in [:logout, :getme]
 
   def register(conn, params) do
     case Auth.create_user(params) do
@@ -45,6 +45,16 @@ defmodule GraphqlWeb.AuthController do
     end
   end
 
+  def getme(conn, _params) do
+    render(conn, "getme.json", %{current_user: conn.assigns.current_user})
+  end
+
+  def logout(conn, _params) do
+    conn
+    |>Plug.Conn.clear_session()
+    |> render("acknowledge.json", %{message: "Logged out"})
+  end
+
   defp dont_exploit_me(conn, _params) do
     if conn.assigns.user_signed_in? do
       send_resp(conn, 401, Constants.not_authorized())
@@ -52,12 +62,6 @@ defmodule GraphqlWeb.AuthController do
     else
       conn
     end
-  end
-
-  def logout(conn, _params) do
-    conn
-    |>Plug.Conn.clear_session()
-    |> render("acknowledge.json", %{message: "Logged out"})
   end
 
   defp protect_me(conn, _params) do

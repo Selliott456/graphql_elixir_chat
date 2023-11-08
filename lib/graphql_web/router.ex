@@ -31,6 +31,7 @@ defmodule GraphqlWeb.Router do
     post "/auth/register", AuthController, :register
     post "/auth/login", AuthController, :login
     delete "/auth/logout", AuthController, :logout
+    get "/auth/getme", AuthController, :getme
   end
 
   scope "/api/graphql" do

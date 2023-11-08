@@ -21,7 +21,8 @@ defmodule GraphqlWeb.Router do
 
   scope "/api" do
     pipe_through :api
-    get "/auth", AuthController, :index
+    post "/auth/register", AuthController, :register
+    post "/auth/login", AuthController, :login
   end
 
   scope "/api/graphql" do

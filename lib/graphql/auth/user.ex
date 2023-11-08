@@ -2,6 +2,8 @@ defmodule Graphql.Auth.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Graphql.Auth.User
+
   schema "users" do
     field :name, :string
     field :username, :string
@@ -20,6 +22,7 @@ defmodule Graphql.Auth.User do
     |> unique_constraint(:email)
     |> validate_format(:email, ~r/@/)
     |> update_change(:email, &String.downcase/1)
+    |> update_change(:username, fn username -> String.downcase(username) end)
     |> validate_length(:password, min: 8, max: 30)
     |> validate_length(:username, min: 3, max: 30)
     |> validate_length(:name, min: 2, max: 30)
@@ -32,5 +35,12 @@ defmodule Graphql.Auth.User do
         put_change(changeset, :password, Argon2.hash_pwd_salt(password))
         _ -> changeset
     end
+  end
+
+  def login_changeset(attrs) do
+    %User{}
+    |> cast(attrs, [:username, :password])
+    |> validate_required([:username, :password])
+    |> update_change(:username, &String.downcase/1)
   end
 end

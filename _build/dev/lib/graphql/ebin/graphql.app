@@ -23,6 +23,7 @@
                         'Elixir.GraphqlWeb.LayoutView',
                         'Elixir.GraphqlWeb.PageController',
                         'Elixir.GraphqlWeb.PageView',
+                        'Elixir.GraphqlWeb.Plugs.ProtectGraphql',
                         'Elixir.GraphqlWeb.PopulateAuth',
                         'Elixir.GraphqlWeb.Router',
                         'Elixir.GraphqlWeb.Router.Helpers',

@@ -9,8 +9,9 @@ defmodule GraphqlWeb.Schema.Resolvers.RoomResolver do
   end
 
   def create_room(_, %{input: input}, %{context: context}) do
+    input_with_user_id = Map.merge(input, %{user_id: context.current_user.id})
 
-    case Chat.create_room(input) do
+    case Chat.create_room(input_with_user_id) do
       {:ok, _room} -> {:ok, true}
       {:error, %Ecto.Changeset{} = changeset} -> {:error, Utils.format_changeset_errors(changeset)}
       _ -> {:error, Constants.internal_server_error}

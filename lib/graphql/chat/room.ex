@@ -7,8 +7,7 @@ defmodule Graphql.Chat.Room do
     field :name, :string
     field :description, :string
 
-
-    belongs_to :users, User
+    belongs_to :user, User
 
     timestamps()
   end

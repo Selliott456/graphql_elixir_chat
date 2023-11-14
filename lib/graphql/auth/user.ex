@@ -2,6 +2,7 @@ defmodule Graphql.Auth.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Graphql.Chat.Room
   alias Graphql.Auth.User
 
   schema "users" do
@@ -9,6 +10,8 @@ defmodule Graphql.Auth.User do
     field :username, :string
     field :password, :string
     field :email, :string
+
+    has_many :rooms, Room
 
     timestamps()
   end

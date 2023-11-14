@@ -1,7 +1,21 @@
 defmodule GraphqlWeb.Schema.Resolvers.RoomResolver do
-  alias Graphql.Chat.Room
+  alias Graphql.Chat
+  alias GraphqlWeb.Utils.Utils
+  alias GraphqlWeb.Constants.Constants
 
-  def get_all_rooms(_, _, %{context: context}) do
-    {:ok, Auth.list_rooms()}
+  def get_all_rooms(_, _, %{context: _context}) do
+    rooms = Chat.list_rooms()
+    {:ok, rooms}
+  end
+
+  def create_room(_, %{input: input}, %{context: context}) do
+
+    case Chat.create_room(input) do
+      {:ok, _room} -> {:ok, true}
+      {:error, %Ecto.Changeset{} = changeset} -> {:error, Utils.format_changeset_errors(changeset)}
+      _ -> {:error, Constants.internal_server_error}
+    end
+
+
   end
 end

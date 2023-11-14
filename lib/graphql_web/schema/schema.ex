@@ -28,7 +28,7 @@ defmodule GraphqlWeb.Schema do
   mutation do
     @desc "Create room"
     field :create_room, :boolean do
-      arg(:input, :room_input_type)
+      arg(:input, non_null(:room_input_type))
       resolve(&Resolvers.RoomResolver.create_room/3)
     end
   end

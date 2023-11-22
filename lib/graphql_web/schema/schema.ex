@@ -9,7 +9,7 @@ defmodule GraphqlWeb.Schema do
     field :hello, :string do
       resolve(fn _, _, _ -> {:ok, "worlds"} end)
     end
-  @desc "Get all users"
+  @dec "Get all users"
     field :users, list_of(:user_type) do
       resolve(&Resolvers.UserResolver.get_all_users/3)
     end
@@ -27,15 +27,9 @@ defmodule GraphqlWeb.Schema do
 
   mutation do
     @desc "Create room"
-      field :create_room, :boolean do
-        arg(:input, non_null(:room_input_type))
-        resolve(&Resolvers.RoomResolver.create_room/3)
-      end
-
-    @desc "Delete room"
-    field :deleteRoom, :boolean do
-      arg(:input, :delete_room_input)
-      resolve(&Resolvers.RoomResolver.delete_room/3)
+    field :create_room, :boolean do
+      arg(:input, non_null(:room_input_type))
+      resolve(&Resolvers.RoomResolver.create_room/3)
     end
   end
 end

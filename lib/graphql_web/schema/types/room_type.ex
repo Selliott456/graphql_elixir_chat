@@ -15,8 +15,4 @@ defmodule GraphqlWeb.Schema.Types.RoomType do
     field :name, non_null(:string)
     field :description, non_null(:string)
   end
-
-  input_object :delete_room_input do
-    field :room_id, :id
-  end
 end

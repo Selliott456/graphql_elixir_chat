@@ -18,7 +18,7 @@ defmodule Graphql.Auth do
 
   """
   def list_users do
-    Repo.all(from(u in User, select: %{id: u.id, email: u.email, name: u.name, username: u.username, inserted_at: u.inserted_at}, order_by: [desc: u.inserted_at]))
+    Repo.all(from(u in User, preload: [:rooms]))
   end
 
   @doc """

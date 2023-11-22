@@ -8,7 +8,7 @@ defmodule GraphqlWeb.AuthController do
 
   import Plug.Conn
 
-  plug :dont_exploit_me when action in [:login]
+  plug :dont_exploit_me when action in [:login, :register]
   plug :protect_me when action in [:logout, :getme]
 
   def register(conn, params) do

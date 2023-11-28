@@ -1,5 +1,6 @@
 defmodule Graphql.Chat.Room do
   alias Graphql.Auth.User
+  alias Graphql.Chat.Message
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -8,6 +9,7 @@ defmodule Graphql.Chat.Room do
     field :description, :string
 
     belongs_to :user, User
+    has_many :messages, Message
 
     timestamps()
   end

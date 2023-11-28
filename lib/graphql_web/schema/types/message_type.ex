@@ -1,0 +1,22 @@
+defmodule GraphqlWeb.Schema.Types.MessageType do
+  use Absinthe.Schema.Notation
+
+  object :message_type do
+
+    field :id, :id
+    field :user_id, :id
+    field :room_id, :id
+    field :user, :user_type
+    field :room, :room_type
+    field :content, :string
+    field :inserted_at, :string
+  end
+
+  input_object :message_input_type do
+    field :content, non_null(:string)
+  end
+
+  input_object :delete_message_input do
+    field :message_id, non_null(:id)
+  end
+end

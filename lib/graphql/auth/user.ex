@@ -3,6 +3,7 @@ defmodule Graphql.Auth.User do
   import Ecto.Changeset
 
   alias Graphql.Chat.Room
+  alias Graphql.Chat.Message
   alias Graphql.Auth.User
 
   schema "users" do
@@ -12,6 +13,7 @@ defmodule Graphql.Auth.User do
     field :email, :string
 
     has_many :rooms, Room
+    has_many :messages, Message
 
     timestamps()
   end

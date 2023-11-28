@@ -9,6 +9,7 @@ defmodule Graphql.Chat do
   alias Graphql.Chat.Room
 
   def list_rooms do
+    IO.puts("List room func")
     Repo.all(from(r in Room, preload: [:user]))
   end
 

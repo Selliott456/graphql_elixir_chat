@@ -1,9 +1,11 @@
 defmodule GraphqlWeb.Schema.Resolvers.RoomResolver do
   alias Graphql.Chat
   alias GraphqlWeb.Utils.Utils
+  alias GraphqlWeb.Schema.Resolvers
   alias GraphqlWeb.Constants.Constants
 
   def get_all_rooms(_, _, %{context: _context}) do
+    IO.puts("get all rooms func")
     rooms = Chat.list_rooms()
     {:ok, rooms}
   end

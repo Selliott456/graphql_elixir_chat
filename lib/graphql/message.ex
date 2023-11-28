@@ -8,6 +8,7 @@ defmodule Graphql.Message do
 
 
     def list_messages do
+      IO.puts("list messages func")
       Repo.all(from(r in Message, preload: [:user]))
     end
 

@@ -15,9 +15,11 @@ defmodule Graphql.Chat.Message do
 
   @doc false
   def changeset(message, attrs) do
+    IO.inspect("here")
     message
     |> cast(attrs, [:content, :user_id, :room_id])
     |> validate_required([:content, :user_id, :room_id])
     |> validate_length(:content, min: 1)
+
   end
 end

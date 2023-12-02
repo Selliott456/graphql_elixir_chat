@@ -1,5 +1,7 @@
 defmodule GraphqlWeb.Schema.Resolvers.MessageResolver do
   alias Graphql.Message
+  alias Graphql.Chat
+  alias Graphql.Chat.Room
   alias GraphqlWeb.Utils.Utils
   alias GraphqlWeb.Constants.Constants
 
@@ -9,19 +11,23 @@ defmodule GraphqlWeb.Schema.Resolvers.MessageResolver do
   end
 
   def create_message(_, %{input: input}, %{context: context}) do
-    input_with_ids = Map.merge(input, %{user_id: context.current_user.id, room_id: input.room_id})
 
-    case Message.create_message(input_with_ids) do
-      {:ok, _message} ->
-        {:ok, true}
+    case Chat.get_room(input.room_id) do
+      %Room{} ->
+        input_with_ids = Map.merge(input, %{user_id: context.current_user.id, room_id: input.room_id})
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:error, Utils.format_changeset_errors(changeset)}
+      case Message.create_message(input_with_ids) do
+        {:ok, _message} ->
+          {:ok, true}
 
-      _ ->
-        {:error, Constants.internal_server_error}
+        {:error, %Ecto.Changeset{} = changeset} ->
+          {:error, Utils.format_changeset_errors(changeset)}
+
+        _ ->
+          {:error, Constants.internal_server_error}
+      end
+        _ -> {:error, Constants.not_found()}
     end
-
   end
 
   def delete_message(_, %{input: input}, %{context: context}) do

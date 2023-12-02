@@ -16,6 +16,8 @@ defmodule Graphql.Chat do
 
   def get_room!(id), do: Repo.get!(Room, id)
 
+  def get_room(id), do: Repo.get(Room, id)
+
   def create_room(attrs \\ %{}) do
     %Room{}
     |> Room.changeset(attrs)

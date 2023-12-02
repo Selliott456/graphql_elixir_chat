@@ -29,13 +29,13 @@ defmodule Graphql.Message do
       Repo.delete(message)
     end
 
-    def delete_message_by_id(message_id, user_id) do
-      from(r in Message, where: r.id == ^message_id and r.user_id == ^user_id)
-      |> Repo.delete_all()
-    end
-
-
     def change_message(%Message{} = message, attrs \\ %{}) do
       Message.changeset(message, attrs)
     end
+
+    def delete_message_by_id(message_id, user_id) do
+      from(m in Message, where: m.id == ^message_id and m.user_id == ^user_id)
+      |> Repo.delete_all()
+    end
+
 end

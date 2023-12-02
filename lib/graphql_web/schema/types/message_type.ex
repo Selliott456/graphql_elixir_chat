@@ -14,6 +14,7 @@ defmodule GraphqlWeb.Schema.Types.MessageType do
 
   input_object :message_input_type do
     field :content, non_null(:string)
+    field :room_id, non_null(:id)
   end
 
   input_object :delete_message_input do

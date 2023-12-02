@@ -12,6 +12,7 @@ defmodule GraphqlWeb.Schema do
     field :hello, :string do
       resolve(fn _, _, _ -> {:ok, "worlds"} end)
     end
+
   @desc "Get all users"
     field :users, list_of(:user_type) do
       resolve(&Resolvers.UserResolver.get_all_users/3)
@@ -19,7 +20,7 @@ defmodule GraphqlWeb.Schema do
 
   @desc "Get Me"
     field :get_me, :user_type do
-    resolve(&Resolvers.UserResolver.get_me/3)
+      resolve(&Resolvers.UserResolver.get_me/3)
     end
 
   @desc "Get all rooms"
@@ -29,8 +30,10 @@ defmodule GraphqlWeb.Schema do
 
   @desc "get all messages"
     field :messages, list_of(:message_type) do
-    resolve(&Resolvers.MessageResolver.get_all_messages/3)
+      arg(:input, non_null(:list_messages_type))
+      resolve(&Resolvers.MessageResolver.get_all_messages/3)
     end
+
   end
 
   mutation do

@@ -7,9 +7,8 @@ defmodule Graphql.Message do
     alias Graphql.Chat.Message
 
 
-    def list_messages do
-      IO.puts("list messages func")
-      Repo.all(from(r in Message, preload: [:user]))
+    def list_messages(room_id) do
+      Repo.all(from(m in Message, where: m.room_id == ^room_id, preload: [:user, :room]))
     end
 
     def get_message!(id), do: Repo.get!(Message, id)

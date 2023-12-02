@@ -1,11 +1,10 @@
 defmodule GraphqlWeb.Schema.Resolvers.MessageResolver do
-  alias Graphql.Chat
   alias Graphql.Message
   alias GraphqlWeb.Utils.Utils
   alias GraphqlWeb.Constants.Constants
 
-  def get_all_messages(_, _, %{context: _context}) do
-    messages = Message.list_messages()
+  def get_all_messages(_, %{input: input}, %{context: _context}) do
+    messages = Message.list_messages(input.room_id)
     {:ok, messages}
   end
 

@@ -12,6 +12,10 @@ defmodule GraphqlWeb.Schema.Types.MessageType do
     field :inserted_at, :string
   end
 
+  input_object :list_messages_type do
+    field :room_id, non_null(:id)
+  end
+
   input_object :message_input_type do
     field :content, non_null(:string)
     field :room_id, non_null(:id)

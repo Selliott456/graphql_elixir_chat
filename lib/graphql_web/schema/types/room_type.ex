@@ -7,6 +7,7 @@ defmodule GraphqlWeb.Schema.Types.RoomType do
     field :user_id, :id
     field :user, :user_type
     field :name, :string
+    field :messages, list_of(:message_type)
     field :description, :string
     field :inserted_at, :string
   end

@@ -10,7 +10,7 @@ defmodule Graphql.Chat do
 
   def list_rooms do
     IO.puts("List room func")
-    Repo.all(from(r in Room, preload: [:user]))
+    Repo.all(from(r in Room, preload: [:user, :messages]))
   end
 
 

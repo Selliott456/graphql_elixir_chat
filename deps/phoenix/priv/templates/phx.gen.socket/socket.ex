@@ -1,5 +1,7 @@
 defmodule <%= module %>Socket do
   use Phoenix.Socket
+  use Absinthe.Phoenix.Socket
+  schema: GraphqlWeb.Schema
 
   # A Socket handler
   #

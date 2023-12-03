@@ -38,7 +38,7 @@ defmodule GraphqlWeb.Router do
     pipe_through :graphql
 
     get "/", Absinthe.Plug.GraphiQL, schema: GraphqlWeb.Schema,
-    interface: :playground
+    interface: :playground, socket: GraphqlWeb.Socket
     post "/", Absinthe.Plug, schema: GraphqlWeb.Schema
   end
 

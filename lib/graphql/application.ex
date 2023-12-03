@@ -15,9 +15,10 @@ defmodule Graphql.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Graphql.PubSub},
       # Start the Endpoint (http/https)
-      GraphqlWeb.Endpoint
+      GraphqlWeb.Endpoint,
       # Start a worker by calling: Graphql.Worker.start_link(arg)
       # {Graphql.Worker, arg}
+      {Absinthe.Subscription, GraphqlWeb.Endpoint}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

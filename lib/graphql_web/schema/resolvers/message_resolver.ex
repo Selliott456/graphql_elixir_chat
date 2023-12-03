@@ -17,8 +17,8 @@ defmodule GraphqlWeb.Schema.Resolvers.MessageResolver do
         input_with_ids = Map.merge(input, %{user_id: context.current_user.id, room_id: input.room_id})
 
       case Message.create_message(input_with_ids) do
-        {:ok, _message} ->
-          {:ok, true}
+        {:ok, message} ->
+          {:ok, message}
 
         {:error, %Ecto.Changeset{} = changeset} ->
           {:error, Utils.format_changeset_errors(changeset)}

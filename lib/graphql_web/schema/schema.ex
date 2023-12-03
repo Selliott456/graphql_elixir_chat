@@ -70,11 +70,13 @@ defmodule GraphqlWeb.Schema do
       arg(:input, non_null(:delete_room_input))
 
       config(fn %{input: input}, _ ->
+        IO.inspect(input, label: "INPUT NEW MESSAGE")
         {:ok, topic: "#{input.room_id}: #{Topics.Topics.new_message()}"}
       end)
 
       trigger(:create_message, topic: fn new_message ->
-        "#{new_message.room_id}: #{Topics.Topics.new_message()}"
+        IO.inspect(new_message)
+        "#{new_message.room_id}:#{Topics.Topics.new_message()}"
       end)
 
       resolve(fn new_message, _, _ ->

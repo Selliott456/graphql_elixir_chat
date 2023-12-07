@@ -65,8 +65,6 @@ defmodule GraphqlWeb.Schema do
     field :new_message, :message_type do
       arg(:input, non_null(:delete_room_input))
 
-      IO.inspect("BANANA")
-
       config(fn %{input: input}, _ ->
 
         {:ok, topic: "#{input.room_id}: #{Topics.Topics.new_message()}"}

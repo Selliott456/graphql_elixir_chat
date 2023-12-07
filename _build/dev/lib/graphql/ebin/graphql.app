@@ -7,7 +7,7 @@
                              phoenix_live_view,phoenix_live_dashboard,esbuild,
                              swoosh,telemetry_metrics,telemetry_poller,
                              gettext,jason,plug_cowboy,absinthe,absinthe_plug,
-                             absinthe_phoenix,argon2_elixir]},
+                             absinthe_phoenix,argon2_elixir,cors_plug]},
               {description,"graphql"},
               {modules,['Elixir.Graphql','Elixir.Graphql.Application',
                         'Elixir.Graphql.Auth','Elixir.Graphql.Auth.User',

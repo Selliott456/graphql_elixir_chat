@@ -7,8 +7,15 @@ defmodule Graphql.Message do
     alias Graphql.Chat.Message
 
 
-    def list_messages(room_id) do
-      Repo.all(from(m in Message, where: m.room_id == ^room_id, preload: [:user, :room]))
+    def list_messages(room_id, cursor \\ nil ) do
+
+      limit = 10
+
+      case cursor do
+        nil -> Repo.all(from(m in Message, where: m.room_id == ^room_id, limit: ^limit, preload: [:user, :room]))
+
+        cursor -> Repo.all(from(m in Message, where: m.room_id == ^room_id and m.id > ^cursor, limit: ^limit, preload: [:user, :room]))
+      end
     end
 
     def get_message!(id), do: Repo.get!(Message, id)

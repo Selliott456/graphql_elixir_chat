@@ -33,8 +33,8 @@ defmodule Graphql.Message do
       Message.changeset(message, attrs)
     end
 
-    def delete_message_by_id(message_id, user_id) do
-      from(m in Message, where: m.id == ^message_id and m.user_id == ^user_id)
+    def delete_message_by_id(message_id, room_id, user_id) do
+      from(m in Message, where: m.id == ^message_id and m.user_id == ^user_id and m.room_id == ^room_id)
       |> Repo.delete_all()
     end
 

@@ -8,11 +8,7 @@ defmodule GraphqlWeb.Schema do
   import_types(GraphqlWeb.Schema.Types.UserType)
   import_types(GraphqlWeb.Schema.Types.MessageType)
 
-  @desc "greet"
   query do
-    field :hello, :string do
-      resolve(fn _, _, _ -> {:ok, "worlds"} end)
-    end
 
   @desc "Get all users"
     field :users, list_of(:user_type) do
@@ -57,31 +53,54 @@ defmodule GraphqlWeb.Schema do
     end
 
     @desc "Delete message"
-    field :delete_message, :boolean do
+    field :delete_message, :deleted_message_type do
       arg(:input, non_null(:delete_message_input))
       resolve(&Resolvers.MessageResolver.delete_message/3)
     end
   end
 
-  subscription do
 
+  subscription do
     @desc "New message"
     field :new_message, :message_type do
       arg(:input, non_null(:delete_room_input))
 
+      IO.inspect("BANANA")
+
       config(fn %{input: input}, _ ->
-        IO.inspect(input, label: "INPUT NEW MESSAGE")
+
         {:ok, topic: "#{input.room_id}: #{Topics.Topics.new_message()}"}
       end)
 
       trigger(:create_message, topic: fn new_message ->
-        IO.inspect(new_message)
+        IO.inspect("trigger fires")
         "#{new_message.room_id}:#{Topics.Topics.new_message()}"
       end)
 
       resolve(fn new_message, _, _ ->
+        IO.inspect("resolve fires")
         {:ok, new_message}
       end)
     end
-  end
+
+
+      @desc "deleted message"
+      field :deleted_message, :deleted_message_type do
+        arg(:input, non_null(:deleted_message_input))
+
+        config(fn %{input: input}, _ ->
+
+          {:ok, topic: "#{input.room_id}: #{Topics.Topics.deleted_message()}"}
+        end)
+
+        trigger(:delete_message, topic: fn %{room_id: room_id} ->
+          "#{room_id}:#{Topics.Topics.deleted_message()}"
+        end)
+
+        resolve(fn payload, _, _ ->
+          {:ok, payload}
+        end)
+      end
+    end
+
 end
